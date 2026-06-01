@@ -77,7 +77,7 @@ ${pastedText}
     contents.push(prompt);
 
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: process.env.GEMINI_MODEL || "gemini-1.5-flash",
         contents: contents,
         config: {
             responseMimeType: "application/json",
@@ -113,3 +113,6 @@ ${pastedText}
         };
     }
 }
+
+// Export alias for compatibility with other entry points (e.g. cron.js)
+export const generateEmail = parseAndGenerate;

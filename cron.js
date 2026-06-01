@@ -80,7 +80,7 @@ async function runAutomation() {
             } catch (jobErr) {
                 console.error(`❌ Failed to process ${job.title} at ${job.company}:`, jobErr.message);
                 failCount++;
-                
+
                 // Save failed attempt to MongoDB so we don't spam attempts on the same job
                 try {
                     await AppliedJob.create({
@@ -119,7 +119,7 @@ async function runAutomation() {
 
 // If executed directly from shell, run immediately
 const isDirectRun = process.argv[1] && (
-    process.argv[1].endsWith("cron.js") || 
+    process.argv[1].endsWith("cron.js") ||
     process.argv[1].includes("cron")
 );
 
@@ -132,7 +132,7 @@ if (isDirectRun) {
 }
 
 // Schedule cron to run daily at 9:00 AM
-cron.schedule("0 9 * * *", () => {
+cron.schedule("0 10 * * *", () => {
     console.log("Scheduled cron triggering at 09:00 AM...");
     runAutomation();
 });
