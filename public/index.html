@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoJob AI — LinkedIn Outreach Panel</title>
+    <!-- Modern Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Modern Premium Dark Mode Design System (HSL-based) */
+        :root {
+            --bg-base: 220, 24%, 7%;
+            --bg-surface: 222, 20%, 12%;
+            --bg-surface-hover: 222, 20%, 16%;
+            --border-color: 220, 16%, 20%;
+            --border-glow: 250, 80%, 65%;
+            
+            --text-primary: 210, 38%, 95%;
+            --text-secondary: 215, 20%, 65%;
+            --text-muted: 217, 10%, 45%;
+            
+            --primary: 250, 80%, 62%;
+            --primary-hover: 250, 85%, 68%;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            
+            --success: 142, 70%, 45%;
+            --success-glow: rgba(16, 185, 129, 0.15);
+            
+            --warning: 38, 92%, 50%;
+            --warning-glow: rgba(245, 158, 11, 0.15);
+            
+            --danger: 350, 80%, 55%;
+            --danger-glow: rgba(239, 68, 68, 0.15);
+            
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: hsl(var(--bg-base));
+            color: hsl(var(--text-primary));
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Sidebar Navigation & Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: hsl(var(--bg-surface));
+            border-right: 1px solid hsl(var(--border-color));
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2.5rem;
+            max-width: 1400px;
+        }
+
+        /* Premium Brand Identity */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--border-glow)));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: white;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, hsl(var(--text-secondary)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation Links */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1rem;
+            color: hsl(var(--text-secondary));
+            font-family: var(--font-display);
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: hsl(var(--bg-surface-hover));
+            color: hsl(var(--text-primary));
+        }
+
+        .nav-item.active {
+            border-left: 3px solid hsl(var(--primary));
+            padding-left: calc(1rem - 3px);
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Status Widget */
+        .status-widget {
+            margin-top: auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .status-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: hsl(var(--text-muted));
+            margin-bottom: 0.75rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-dot.active {
+            background-color: hsl(var(--success));
+            box-shadow: 0 0 8px hsl(var(--success));
+        }
+
+        .status-dot.warn {
+            background-color: hsl(var(--warning));
+            box-shadow: 0 0 8px hsl(var(--warning));
+        }
+
+        /* Dashboard Overview Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: hsl(var(--bg-surface));
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-info h3 {
+            font-size: 0.85rem;
+            color: hsl(var(--text-secondary));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .stat-card.total .stat-icon-wrapper { background-color: rgba(99, 102, 241, 0.1); color: hsl(var(--primary)); }
+        .stat-card.sent .stat-icon-wrapper { background-color: rgba(16, 185, 129, 0.1); color: hsl(var(--success)); }
+        .stat-card.failed .stat-icon-wrapper { background-color: rgba(239, 68, 68, 0.1); color: hsl(var(--danger)); }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .btn {
+            background-color: hsl(var(--primary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.65rem 1.3rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: hsl(var(--primary-hover));
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid hsl(var(--border-color));
+            color: hsl(var(--text-secondary));
+        }
+
+        .btn-secondary:hover {
+            background-color: hsl(var(--bg-surface-hover));
+            color: hsl(var(--text-primary));
+            border-color: hsl(var(--text-muted));
+        }
+
+        /* Studio Workspace Layout */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .panel {
+            background-color: hsl(var(--bg-surface));
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            border-bottom: 1px solid hsl(var(--border-color));
+            padding-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: hsl(var(--border-color));
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: hsl(var(--text-muted));
+        }
+
+        /* Forms & Composer Input Elements */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: hsl(var(--text-secondary));
+            margin-bottom: 0.4rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            background-color: hsl(var(--bg-base));
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: hsl(var(--text-primary));
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: hsl(var(--primary));
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+        }
+
+        .form-textarea {
+            resize: none;
+            line-height: 1.6;
+        }
+
+        #paste-box {
+            height: calc(100vh - 350px);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+        }
+
+        #outreach-body {
+            height: calc(100vh - 460px);
+            font-size: 0.85rem;
+        }
+
+        /* Badge Styling */
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-sent { background-color: rgba(16, 185, 129, 0.1); color: hsl(var(--success)); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .badge-failed { background-color: rgba(239, 68, 68, 0.1); color: hsl(var(--danger)); border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        /* History Table Styles */
+        .history-table-container {
+            background-color: hsl(var(--bg-surface));
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 16px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .history-table th {
+            background-color: rgba(255, 255, 255, 0.02);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: hsl(var(--text-secondary));
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid hsl(var(--border-color));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid hsl(var(--border-color));
+            font-size: 0.9rem;
+            color: hsl(var(--text-primary));
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .history-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Console Terminal Output */
+        .console {
+            background-color: hsl(var(--bg-base));
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 12px;
+            padding: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #38bdf8;
+            height: 90px;
+            overflow-y: auto;
+            margin-top: 0.75rem;
+            border-left: 3px solid hsl(var(--primary));
+        }
+
+        .console-line {
+            margin-bottom: 0.25rem;
+        }
+
+        .console-info { color: #38bdf8; }
+        .console-success { color: #34d399; }
+        .console-error { color: #f87171; }
+        .console-warn { color: #fbbf24; }
+
+        /* Loader Overlay Component */
+        .loader-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 9, 15, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .loader-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            border-top-color: hsl(var(--primary));
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: hsl(var(--text-primary));
+        }
+
+        /* Success Overlay */
+        .success-animation {
+            text-align: center;
+            animation: scaleUp 0.4s ease;
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .checkmark-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 2px solid hsl(var(--success));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: hsl(var(--success));
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Resume Context Badge */
+        .resume-badge {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .resume-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .resume-icon {
+            font-size: 1.8rem;
+            color: #f43f5e;
+        }
+
+        .resume-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .resume-meta {
+            font-size: 0.75rem;
+            color: hsl(var(--text-secondary));
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">AJ</div>
+                <div class="brand-name">AutoJob AI</div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-item active" onclick="switchTab('workspace')"><span class="nav-icon">✨</span> Paste & Apply</a></li>
+                    <li><a href="#" class="nav-item" onclick="switchTab('history')"><span class="nav-icon">📊</span> Application Log</a></li>
+                </ul>
+            </nav>
+
+            <div class="status-widget">
+                <div class="status-title">System Health</div>
+                <div class="status-indicator">
+                    <span id="db-status-dot" class="status-dot warn"></span>
+                    <span>MongoDB: <strong id="db-status-text">Connecting...</strong></span>
+                </div>
+                <div class="status-indicator">
+                    <span id="gemini-status-dot" class="status-dot active"></span>
+                    <span>Gemini AI: <strong>2.5 Flash</strong></span>
+                </div>
+                <div class="status-indicator">
+                    <span id="smtp-status-dot" class="status-dot active"></span>
+                    <span>SMTP Service: <strong>Active</strong></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="main-content">
+            
+            <!-- RESUME BADGE CONTEXT -->
+            <div class="resume-badge">
+                <div class="resume-info">
+                    <span class="resume-icon">📄</span>
+                    <div>
+                        <div class="resume-name">AbdulHadi_Yaseen.pdf</div>
+                        <div class="resume-meta">Active Resume Context Loaded • Gemini extracts your details automatically</div>
+                    </div>
+                </div>
+                <span class="badge badge-sent">Operational</span>
+            </div>
+
+            <!-- TAB 1: APPLICATION WORKSPACE STUDIO -->
+            <section id="tab-workspace" class="tab-section">
+                <!-- STATS COUNTER -->
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-info">
+                            <h3>Total Actions</h3>
+                            <div class="stat-value" id="stat-scanned">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">🔄</div>
+                    </div>
+                    <div class="stat-card sent">
+                        <div class="stat-info">
+                            <h3>Emails Sent</h3>
+                            <div class="stat-value" id="stat-sent">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">🚀</div>
+                    </div>
+                    <div class="stat-card failed">
+                        <div class="stat-info">
+                            <h3>Failed Tries</h3>
+                            <div class="stat-value" id="stat-failed">0</div>
+                        </div>
+                        <div class="stat-icon-wrapper">⚠️</div>
+                    </div>
+                </div>
+
+                <div class="workspace">
+                    <!-- Left Column: Copied LinkedIn Text Input -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>1. Paste LinkedIn Job Post</h3>
+                            <button class="btn btn-secondary" onclick="clearPasteBox()" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Clear</button>
+                        </div>
+                        <div class="panel-body" style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="form-group" style="flex: 1; margin-bottom: 0; display: flex; flex-direction: column;">
+                                <label class="form-label">Paste the job title, company, and description (Ctrl+A & Ctrl+C from LinkedIn):</label>
+                                <textarea id="paste-box" class="form-textarea" style="flex: 1;" placeholder="Example:
+Software Engineer at TechCorp
+We are hiring a MERN Stack Developer..."></textarea>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">Job Post Link / URL (Optional, for logging):</label>
+                                <input type="url" id="job-url" class="form-input" placeholder="https://www.linkedin.com/jobs/view/...">
+                            </div>
+                            <button class="btn" onclick="parseAndCompose()" style="width: 100%; padding: 0.8rem;">
+                                ✨ Magic Parse & Compose Cover Letter
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Gemini Tailored Email Drafting -->
+                    <div class="panel" style="position: relative;">
+                        
+                        <!-- Dynamic Spinner Loader Inside Workspace Panel -->
+                        <div class="loader-overlay" id="workspace-loader">
+                            <div class="spinner"></div>
+                            <div class="loader-text" id="loader-status-text">Drafting email using Gemini 2.5 Flash...</div>
+                        </div>
+
+                        <div class="panel-header">
+                            <h3>2. Tailored Composer Review</h3>
+                            <span class="badge badge-sent">AI Drafting Workspace</span>
+                        </div>
+                        
+                        <div class="panel-body">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Job Title</label>
+                                    <input type="text" id="outreach-title" class="form-input" placeholder="Title (Autodetected)">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Company Name</label>
+                                    <input type="text" id="outreach-company" class="form-input" placeholder="Company (Autodetected)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Recruiter's Contact Email Address</label>
+                                <input type="email" id="outreach-email" class="form-input" placeholder="recruiter@company.com (Autodetected or enter manually)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Subject Line</label>
+                                <input type="text" id="outreach-subject" class="form-input" placeholder="compelling subject line generated by Gemini">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Tailored Outreach Cover Letter</label>
+                                <textarea id="outreach-body" class="form-textarea" placeholder="AI-generated concise body content leveraging AbdulHadi Yaseen's exact resume details..."></textarea>
+                            </div>
+                            
+                            <button class="btn" onclick="sendApplication()" style="width: 100%; padding: 0.8rem;">
+                                🚀 Dispatch Application Email
+                            </button>
+
+                            <div class="console" id="workspace-console">
+                                <div class="console-line console-info">Workspace console initialized. Ready to copy-paste.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: APPLICATION HISTORY LOG -->
+            <section id="tab-history" class="tab-section" style="display: none;">
+                <div class="section-header">
+                    <h2 class="section-title">Application Processing Logs</h2>
+                    <button class="btn btn-secondary" onclick="loadHistory()">🔄 Refresh History</button>
+                </div>
+
+                <div class="history-table-container">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Applied Date</th>
+                                <th>Job Title</th>
+                                <th>Company</th>
+                                <th>Recipient Email</th>
+                                <th>Status</th>
+                                <th>Outreach Subject</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-rows">
+                            <!-- Dynamic rows go here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Global variables state
+        let activeDescription = "";
+
+        // Initialize App on load
+        window.addEventListener("DOMContentLoaded", () => {
+            loadStats();
+            checkSystemHealth();
+            // Poll system health occasionally
+            setInterval(checkSystemHealth, 15000);
+        });
+
+        // Tab Navigation switcher
+        function switchTab(tabId) {
+            document.querySelectorAll(".tab-section").forEach(sec => sec.style.display = "none");
+            document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+            
+            document.getElementById(`tab-${tabId}`).style.display = "block";
+            
+            // Find active navigation item
+            const navLink = Array.from(document.querySelectorAll(".nav-item")).find(link => link.innerHTML.includes(tabId === "workspace" ? "Paste &amp; Apply" : "Application Log"));
+            if (navLink) navLink.classList.add("active");
+
+            if (tabId === "history") {
+                loadHistory();
+            }
+        }
+
+        // Clear input box
+        function clearPasteBox() {
+            document.getElementById("paste-box").value = "";
+            document.getElementById("job-url").value = "";
+        }
+
+        // Fetch System status & health indicators
+        async function checkSystemHealth() {
+            try {
+                const res = await fetch("/api/stats");
+                const data = await res.json();
+                if (data.success) {
+                    const dbDot = document.getElementById("db-status-dot");
+                    const dbText = document.getElementById("db-status-text");
+                    dbDot.className = "status-dot active";
+                    dbText.textContent = "Connected";
+                }
+            } catch (err) {
+                const dbDot = document.getElementById("db-status-dot");
+                const dbText = document.getElementById("db-status-text");
+                dbDot.className = "status-dot warn";
+                dbText.textContent = "Error Connection";
+            }
+        }
+
+        // Fetch stats numerical indicators
+        async function loadStats() {
+            try {
+                const res = await fetch("/api/stats");
+                const data = await res.json();
+                if (data.success && data.stats) {
+                    document.getElementById("stat-scanned").textContent = data.stats.total;
+                    document.getElementById("stat-sent").textContent = data.stats.sent;
+                    document.getElementById("stat-failed").textContent = data.stats.failed;
+                }
+            } catch (err) {
+                console.error("Failed to load stats indicators", err);
+            }
+        }
+
+        // Trigger Gemini to parse pasted text and compose email
+        async function parseAndCompose() {
+            const pastedText = document.getElementById("paste-box").value.trim();
+            const consoleBox = document.getElementById("workspace-console");
+
+            if (!pastedText) {
+                alert("Please paste the LinkedIn job posting text before hitting parse.");
+                return;
+            }
+
+            activeDescription = pastedText;
+
+            const loader = document.getElementById("workspace-loader");
+            loader.classList.add("active");
+            document.getElementById("loader-status-text").innerHTML = "AI extracting metadata & drafting cover email...";
+            
+            consoleBox.innerHTML = `<div class="console-line console-info">[System] Sending pasted text to Gemini 2.5 Flash API...</div>`;
+            consoleBox.innerHTML += `<div class="console-line console-info">[System] Reading resume context (AbdulHadi_Yaseen.pdf) and parsing job details...</div>`;
+
+            try {
+                const res = await fetch("/api/jobs/parse-paste", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pastedText })
+                });
+                
+                const data = await res.json();
+                loader.classList.remove("active");
+
+                if (data.success && data.analysis) {
+                    const analysis = data.analysis;
+                    document.getElementById("outreach-title").value = analysis.jobTitle || "";
+                    document.getElementById("outreach-company").value = analysis.companyName || "";
+                    document.getElementById("outreach-email").value = analysis.recruiterEmail || "";
+                    document.getElementById("outreach-subject").value = analysis.subject || "";
+                    document.getElementById("outreach-body").value = analysis.body || "";
+                    
+                    consoleBox.innerHTML += `<div class="console-line console-success">[Success] AI extracted title: "${analysis.jobTitle}" @ "${analysis.companyName}"</div>`;
+                    if (analysis.recruiterEmail) {
+                        consoleBox.innerHTML += `<div class="console-line console-success">[Success] Autodetected Recruiter Email: ${analysis.recruiterEmail}</div>`;
+                    } else {
+                        consoleBox.innerHTML += `<div class="console-line console-warn">[Warning] No recruiter email found in text. Please enter it manually below.</div>`;
+                    }
+                } else {
+                    consoleBox.innerHTML += `<div class="console-line console-error">[Error] Parsing failed: ${data.error}</div>`;
+                }
+            } catch (err) {
+                loader.classList.remove("active");
+                consoleBox.innerHTML += `<div class="console-line console-error">[Critical] API Network Exception: ${err.message}</div>`;
+            }
+        }
+
+        // Send outreach email using backend Nodemailer
+        async function sendApplication() {
+            const title = document.getElementById("outreach-title").value.trim();
+            const company = document.getElementById("outreach-company").value.trim();
+            const email = document.getElementById("outreach-email").value.trim();
+            const subject = document.getElementById("outreach-subject").value.trim();
+            const body = document.getElementById("outreach-body").value.trim();
+            const url = document.getElementById("job-url").value.trim();
+            const consoleBox = document.getElementById("workspace-console");
+
+            if (!title || !company) {
+                alert("Please ensure Job Title and Company Name are filled in.");
+                return;
+            }
+
+            if (!email) {
+                consoleBox.innerHTML += `<div class="console-line console-warn">[Warning] Recruiter email cannot be blank. Enter email manually.</div>`;
+                alert("Please enter a valid Recruiter Application Email Address.");
+                return;
+            }
+
+            const loader = document.getElementById("workspace-loader");
+            loader.classList.add("active");
+            document.getElementById("loader-status-text").innerHTML = `Sending email to ${email}...`;
+            
+            consoleBox.innerHTML += `<div class="console-line console-info">[SMTP] Establishing connection to transporter email...</div>`;
+
+            try {
+                const res = await fetch("/api/jobs/apply", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        title: title,
+                        company: company,
+                        description: activeDescription || "Manually pasted LinkedIn job description.",
+                        url: url,
+                        recruiterEmail: email,
+                        subject: subject,
+                        body: body
+                    })
+                });
+
+                const data = await res.json();
+                loader.classList.remove("active");
+
+                if (data.success) {
+                    // Update stats
+                    loadStats();
+                    
+                    // HTML Success animation inside workspace overlay
+                    loader.innerHTML = `
+                        <div class="success-animation">
+                            <div class="checkmark-circle">✓</div>
+                            <div class="loader-text" style="font-size:1.2rem; font-weight:700; margin-bottom: 0.5rem;">Email Sent!</div>
+                            <p style="color: hsl(var(--text-secondary)); font-size:0.85rem; margin-bottom:1.5rem;">Application successfully dispatched directly to ${email}</p>
+                            <button class="btn" style="margin: 0 auto;" onclick="resetWorkspaceAfterSend()">Done</button>
+                        </div>
+                    `;
+                    loader.classList.add("active");
+                    consoleBox.innerHTML += `<div class="console-line console-success">[Success] Application logged to MongoDB. Email sent via SMTP!</div>`;
+                } else {
+                    consoleBox.innerHTML += `<div class="console-line console-error">[Error] Email dispatch failed: ${data.error}</div>`;
+                    alert(`Delivery Failed: ${data.error}`);
+                }
+            } catch (err) {
+                loader.classList.remove("active");
+                consoleBox.innerHTML += `<div class="console-line console-error">[Critical] Send Exception: ${err.message}</div>`;
+                alert(`Error: ${err.message}`);
+            }
+        }
+
+        // Reset composer HTML elements after success
+        function resetWorkspaceAfterSend() {
+            const loader = document.getElementById("workspace-loader");
+            loader.classList.remove("active");
+            
+            // Restore default spinner elements inside overlay
+            loader.innerHTML = `
+                <div class="spinner"></div>
+                <div class="loader-text" id="loader-status-text">Drafting email using Gemini 2.5 Flash...</div>
+            `;
+            
+            // Clear inputs
+            clearPasteBox();
+            document.getElementById("outreach-title").value = "";
+            document.getElementById("outreach-company").value = "";
+            document.getElementById("outreach-email").value = "";
+            document.getElementById("outreach-subject").value = "";
+            document.getElementById("outreach-body").value = "";
+            activeDescription = "";
+        }
+
+        // Fetch application history log from MongoDB
+        async function loadHistory() {
+            const tbody = document.getElementById("history-rows");
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: hsl(var(--text-muted)); padding: 2rem;">Loading application database records...</td></tr>`;
+
+            try {
+                const res = await fetch("/api/applications");
+                const data = await res.json();
+
+                if (!data.success || !data.applications || data.applications.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: hsl(var(--text-muted)); padding: 2rem;">No applications saved in the database history.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = "";
+                data.applications.forEach(app => {
+                    const row = document.createElement("tr");
+                    
+                    const statusBadgeClass = 
+                        app.status === "sent" ? "badge-sent" : "badge-failed";
+
+                    const truncatedSubject = app.subject.length > 40 ? app.subject.substring(0, 40) + "..." : app.subject;
+
+                    row.innerHTML = `
+                        <td style="color: hsl(var(--text-secondary));">${new Date(app.appliedAt).toLocaleString()}</td>
+                        <td style="font-weight: 500;">${app.title}</td>
+                        <td style="color: hsl(var(--primary-hover)); font-weight: 500;">${app.company}</td>
+                        <td>${app.recruiterEmail}</td>
+                        <td><span class="badge ${statusBadgeClass}">${app.status}</span></td>
+                        <td style="font-family: var(--font-mono); font-size: 0.75rem; color: hsl(var(--text-secondary));" title="${app.subject}">${truncatedSubject}</td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size:0.75rem;" onclick="viewHistoryItem('${app._id}')">👁️ View</button>
+                                <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size:0.75rem; border-color: hsla(350,80%,55%,0.3); color: hsl(var(--danger));" onclick="deleteHistoryItem('${app._id}')">🗑️ Delete</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: hsl(var(--danger)); padding: 2rem;">Database Fetch Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        // View single history email dialog details
+        async function viewHistoryItem(id) {
+            try {
+                const res = await fetch("/api/applications");
+                const data = await res.json();
+                if (data.success && data.applications) {
+                    const app = data.applications.find(a => a._id === id);
+                    if (app) {
+                        alert(`
+Company: ${app.company}
+Title: ${app.title}
+Recipient Email: ${app.recruiterEmail}
+Applied At: ${new Date(app.appliedAt).toLocaleString()}
+
+--- SUBJECT ---
+${app.subject}
+
+--- EMAIL BODY ---
+${app.body}
+                        `);
+                    }
+                }
+            } catch (err) {
+                alert(`Error loading details: ${err.message}`);
+            }
+        }
+
+        // Delete item from history list
+        async function deleteHistoryItem(id) {
+            if (!confirm("Are you sure you want to delete this application record from history? This cannot be undone.")) return;
+
+            try {
+                const res = await fetch(`/api/applications/${id}`, { method: "DELETE" });
+                const data = await res.json();
+                if (data.success) {
+                    loadHistory();
+                    loadStats();
+                } else {
+                    alert(`Failed to delete: ${data.error}`);
+                }
+            } catch (err) {
+                alert(`Error: ${err.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
