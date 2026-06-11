@@ -61,7 +61,7 @@ export async function parseAndGenerate(pastedText) {
         throw new Error("OPENROUTER_API_KEY is not defined in the environment variables. Please check your .env file.");
     }
 
-    const modelName = process.env.OPENROUTER_MODEL || "nvidia/nemotron-3-super-120b-a12b:free";
+    const modelName = process.env.OPENROUTER_MODEL || "openrouter/free";
     console.log(`🤖 Initializing OpenRouter connection for model: "${modelName}"`);
 
     const openai = new OpenAI({
