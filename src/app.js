@@ -5,7 +5,7 @@ import path from "path";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
 import AppliedJob from "./models/AppliedJob.js";
-import { parseAndGenerate } from "./services/gemini.js";
+import { parseAndGenerate } from "./services/openRouter.js";
 import { sendEmail } from "./services/email.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +39,7 @@ app.post("/api/jobs/parse-paste", async (req, res) => {
     }
 
     try {
-        console.log("Processing pasted LinkedIn/Job text with Gemini...");
+        console.log("Processing pasted LinkedIn/Job text with OpenRouter...");
         const result = await parseAndGenerate(pastedText);
         res.json({ success: true, analysis: result });
     } catch (error) {

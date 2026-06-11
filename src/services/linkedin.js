@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 import "dotenv/config";
 import AppliedJob from "../models/AppliedJob.js";
-import { parseAndGenerate } from "./gemini.js";
+import { parseAndGenerate } from "./openRouter.js";
 import { sendEmail } from "./email.js";
 
 // MONGODB CONNECTION CHECK
@@ -221,8 +221,8 @@ export async function runLinkedInAutomation() {
 
                     console.log(`📝 Crawled Post Description (Length: ${cleanExpandedDesc.length} chars)`);
 
-                    // Call Gemini 2.5 Flash to parse, verify rules, and draft outreach
-                    console.log("🤖 Running Gemini 2.5 Flash analysis...");
+                    // Call OpenRouter to parse, verify rules, and draft outreach
+                    console.log("🤖 Running OpenRouter analysis...");
                     const draft = await parseAndGenerate(cleanExpandedDesc);
 
                     console.log(`   - Extracted Recruiter Email: ${draft.recruiterEmail || "NONE"}`);

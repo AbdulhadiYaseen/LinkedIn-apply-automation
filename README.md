@@ -1,6 +1,6 @@
 # 🦁 AutoJob: LinkedIn Outreach & Apply Automation
 
-AutoJob is an intelligent, automated job application and recruiter outreach assistant built using **Node.js, Puppeteer, Express, MongoDB, and the Gemini API**. It crawls LinkedIn search feeds for job postings, parses instructions with Gemini to identify recruiter contact details, crafts highly tailored cover letter drafts, sends them directly via Nodemailer (if invited), and keeps logs in a local MongoDB database with a web-based management dashboard.
+AutoJob is an intelligent, automated job application and recruiter outreach assistant built using **Node.js, Puppeteer, Express, MongoDB, and the OpenRouter API**. It crawls LinkedIn search feeds for job postings, parses instructions with OpenRouter to identify recruiter contact details, crafts highly tailored cover letter drafts, sends them directly via Nodemailer (if invited), and keeps logs in a local MongoDB database with a web-based management dashboard.
 
 ---
 
@@ -11,7 +11,7 @@ AutoJob is an intelligent, automated job application and recruiter outreach assi
   - Searches custom filters (e.g. *"MERN Developer کراچی remote"*) and filters by **Posts** tab.
   - Dynamically infinite-scrolls, lazy-loads, and expands post cards using "... more" selectors.
   
-- **🧠 Gemini API AI Drafting**
+- **🧠 OpenRouter API AI Drafting**
   - Synthesizes and matches job description details against developer skills.
   - Detects if direct email applications are invited and extracts the recruiter's email.
   - Generates personalized, professional subject lines and email body outreach drafts.
@@ -39,7 +39,7 @@ AutoJob is an intelligent, automated job application and recruiter outreach assi
 
 - **Core**: Node.js (ES Modules, `type: "module"`)
 - **Automation & Crawling**: Puppeteer (Chromium browser automation)
-- **AI Processing**: Google Gemini API (`@google/genai`)
+- **AI Processing**: OpenRouter API (`openai`)
 - **Backend Framework**: Express.js
 - **Database / ODM**: MongoDB & Mongoose
 - **Outreach Engine**: Nodemailer
@@ -56,7 +56,7 @@ AutoJob is an intelligent, automated job application and recruiter outreach assi
 │   │   └── AppliedJob.js   # MongoDB Schema for application logs and draft status
 │   ├── services/
 │   │   ├── email.js        # Nodemailer SMTP transport service
-│   │   ├── gemini.js       # Gemini API prompt generation and extraction service
+│   │   ├── openRouter.js   # OpenRouter API prompt generation and extraction service
 │   │   ├── jobs.js         # Tech job fetcher/filter service
 │   │   └── linkedin.js     # Puppeteer interactive crawler & auto-apply runner
 │   └── app.js              # Express Web Server and Dashboard API endpoints
@@ -80,7 +80,7 @@ graph TD
     E --> F[dynamic infinite scroll & card expansion]
     F --> G[Extract Post Description & Hash Check]
     G -->|Already Applied/Failed| H[Skip Post]
-    G -->|New Post| I[Send Details to Gemini AI]
+    G -->|New Post| I[Send Details to OpenRouter AI]
     I --> J{Email Application Invited?}
     J -->|Yes + Recruiter Email Found| K[Send Email via Nodemailer]
     K --> L[Save Status as 'sent' in MongoDB]
@@ -95,7 +95,7 @@ graph TD
 ### 1. Prerequisites
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 - [MongoDB](https://www.mongodb.com/) (running locally on default port `27017` or a MongoDB Atlas URI)
-- A Google Gemini API Key
+- An OpenRouter API Key
 
 ### 2. Clone the Repository
 ```bash
@@ -109,20 +109,25 @@ npm install
 ```
 
 ### 4. Configure Environment Variables
-Create a `.env` file in the root folder (based on your credentials):
+Create a `.env` file in the root folder by copying the `.env.example` template:
+```bash
+cp .env.example .env
+```
+
+Now, open `.env` and fill in your credentials:
 ```env
 PORT=3000
 MONGODB_URI=mongodb://127.0.0.1:27017/job-automation
 
-# Google Gemini API
-GEMINI_API_KEY=your_gemini_api_key_here
+# OpenRouter Configuration
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+OPENROUTER_MODEL=nvidia/nemotron-3-super-120b-a12b:free
 
-# SMTP Outreach Email Configuration (e.g., Gmail App Password)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=465
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-gmail-app-password
+# Gmail SMTP Configuration (Gmail App Password)
+EMAIL=your-email@gmail.com
+APP_PASSWORD=your-gmail-app-password
 ```
+
 
 ---
 

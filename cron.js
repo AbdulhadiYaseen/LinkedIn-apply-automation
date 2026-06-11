@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cron from "node-cron";
 import AppliedJob from "./src/models/AppliedJob.js";
 import { fetchJobs } from "./src/services/jobs.js";
-import { generateEmail } from "./src/services/gemini.js";
+import { generateEmail } from "./src/services/openRouter.js";
 import { sendEmail } from "./src/services/email.js";
 
 const MONGO_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/job-automation";
@@ -39,8 +39,8 @@ async function runAutomation() {
             console.log(`\nNew Job: "${job.title}" at ${job.company}`);
 
             try {
-                // Generate customized subject and email body with Gemini
-                console.log(`Drafting application email with Gemini...`);
+                // Generate customized subject and email body with OpenRouter
+                console.log(`Drafting application email with OpenRouter...`);
                 const draft = await generateEmail(job.description);
 
                 if (job.recruiterEmail) {
